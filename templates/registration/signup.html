@@ -1,0 +1,16 @@
+<head>signup</head>
+
+<body>
+    <div class="container">
+        <h1>signup</h1>
+        <form method="POST" action="{% url 'signup' %}">
+            {% csrf_token %}
+            {{ userform.as_p }}
+            <input type="submit" value='sign up'>
+        </form>
+        <center>
+            <p>완료</p>
+            <br>
+        </center>
+    </div>
+</body>

@@ -1,0 +1,15 @@
+<head>login</head>
+<body>
+    <div>
+        {% if form.errors %}
+        <p>아이디나 비밀번호가 틀렸습니다.</p>
+        {% endif %}
+
+        <h1>login</h1>
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">login</button>
+        </form>
+    </div>
+</body>

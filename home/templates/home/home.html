@@ -1,0 +1,25 @@
+{% load static %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+
+<body>
+    <h2>박정은</h2>
+    {% if user.is_active %}
+    <p>{{ user.username }}</p>
+    <a href="{% url 'signup' %}">signup</a>
+    <a href="{% url 'logout' %}">logout</a>               
+    {% else %}
+    <a href="{% url 'signup' %}">signup</a>
+    <a href="{% url 'login' %}">login</a>
+    {% endif %}
+
+    <br>
+    {% for post in posts.all %}
+        <div>
+            <a href = "{% url 'datail' post.id %}">{{post.title}}</a>
+            <p>{{post.text}}</p>
+        </div>
+    {% endfor %}
+    <a href = "{% url 'new' %}">글쓰기</a>
+</body>
