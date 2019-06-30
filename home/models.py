@@ -13,6 +13,15 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def summary(self):
+        a =[]
+        a.append(self.title)
+
+        if len(a[-1])>6:
+            return self.title[:6]+'...'
+        else:
+            return self.title
 
 class Comment(models.Model):
     post=models.ForeignKey('home.Post',related_name='comments', on_delete=models.CASCADE)

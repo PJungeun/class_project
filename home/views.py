@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, Comment
 from django.utils import timezone
 from .forms import PostForm, CommentForm
@@ -8,11 +8,11 @@ def home(request):
     posts = Post.objects
     return render(request, 'home/home.html', {'posts':posts})
 
-def detail(request):
+def detail(request,post_id):
     post_detail = get_object_or_404(Post, pk = post_id)
     form=CommentForm()
-    return render(request, 'home/detail.html',{'post' : post_detail})
-
+    return render(request, 'home/detail.html',{'post' : post_detail,'form':form,})
+   
 def post_new(request):
     if request.method=="POST":
         form=PostForm(request.POST)

@@ -1,25 +1,40 @@
 {% load static %}
 <head>
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
-    <h2>박정은</h2>
+    <center><h3>HOME</h3></center>
+    <p><div style="border: 1px; float: left; width: 50%;">박정은</div>
+    <div style="border: 1px; float: right; width: 15%;">
     {% if user.is_active %}
-    <p>{{ user.username }}</p>
-    <a href="{% url 'signup' %}">signup</a>
-    <a href="{% url 'logout' %}">logout</a>               
+    {{ user.username }}님
+    <a href="{% url 'logout' %}">logout</a>
+    </div>
+    </p>
+    <div style="border: 1px; float: right; width: 15%;">               
     {% else %}
     <a href="{% url 'signup' %}">signup</a>
     <a href="{% url 'login' %}">login</a>
     {% endif %}
-
-    <br>
+    </div>
+    </p>
+    <hr>
+    <br><br>
+    <center>
     {% for post in posts.all %}
         <div>
-            <a href = "{% url 'datail' post.id %}">{{post.title}}</a>
-            <p>{{post.text}}</p>
-        </div>
+            {% if user.is_active %} 
+            <h3 align="center"><a href="{% url 'detail' post.id %}">{{post.summary}}</a></h3> 
+            {% else %} 
+            <h3 align="center"><a href="{% url 'signup' %}">{{post.summary}}</a></h3> 
+            {% endif %}
+        </div> 
+            {% comment %} <a href = "{% url 'detail' post.id %}">{{post.title}}</a>
+        </div>  {% endcomment %}
     {% endfor %}
-    <a href = "{% url 'new' %}">글쓰기</a>
+    <br><br><br>
+    <hr>
+    <a class="btn btn-outline-secondary" href = "{% url 'new' %}" role="button">글쓰기</a>
+    </center>
 </body>

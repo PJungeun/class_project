@@ -1,36 +1,39 @@
+{% load static %}
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
     <div>
+        <h3>소감문</h3>
+        <hr>
         <h2>{{post.title}}</h2>
-        <a href="{% url 'edit' post.id %}">수정</a>
-        <a href="{% url 'delete' post.id %}">삭제</a>
-        <a href="{% url 'home' %}">홈으로</a>
-
-        <br>
+        <a class="btn btn-outline-secondary btn-sm" href="{% url 'edit' post.id %}" role="button">수정</a>
+        <a class="btn btn-outline-secondary btn-sm" href="{% url 'delete' post.id %}" role="button">삭제</a>
+        <a class="btn btn-outline-secondary btn-sm" href="{% url 'home' %}" role="button">홈으로</a>
+        <br><br>
         <p>{{post.text}}</p>
     </div>
+    <hr>  
+    <p>댓글{{post.comments.count}}개</p>
     <hr>
     {% for comment in post.comments.all%}
     <div>
-        <div>{{comment.created_date}}</div>
-        <strong>{{comment.nickname}}</strong>
-        {{comment.text|linebreaks}}
+        <p><strong>{{comment.nickname}}</strong>{{comment.created_date}}</p>
+        {{comment.text|linebreaks}}        
         <a href="{% url 'comment_delete' comment_id=comment.id %}">댓글 삭제</a>
     </div>
-
-    <p>댓글{{post.comments.count}}개</p>
-    <div class="form-group">
-        <h4>댓글 입력</h4>
-        <form method="POST" action="{% url 'add_comment' post.id %}">
-            {% csrf_token %}
-            {{form.as_p}}
-            <button type="submit" class="save btn btn-default">작성</button>
-        </form>
-    </div>
-
+    <hr>
     {% empty%}
     <p>댓글이 없습니다</p>
     {% endfor %}
+
+    <div class="form-group">
+        <h6>댓글 입력</h6>
+        <form method="POST" action="{% url 'add_comment' post.id %}">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit">작성</button>
+        </form>
+    </div>
 </body>
